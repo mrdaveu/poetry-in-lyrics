@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="./stylesheet.css">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="Poetry in Lyrics">
+   <title>Poetry in Lyrics</title>
+</head>
+
+<body>
+   <div class="fullscreen_01">
+      <header>
+         <div class="header">
+            <div class="logo"><a href="./"><img src="./media/logo.png" alt="Poetry in Lyrics"
+                     style="width: var(--logo-width)"></a></div>
+         </div>
+      </header>
+      <button id="unmuteButton">sound</button>
+      <div id="container">
+         <div id="video-wrapper">
+            <div id="video-frame"></div>
+            <div id="video-overlay"></div>
+         </div>
+      </div>
+      <div class="desktop">
+            <h1>{{ chinese_song_title }}</h1>
+            <h2>{{ english_song_title }}</h2>
+            <h4>{{ english_author}} <br> <span class="chi_font">{{ chinese_author }}</span></h4>
+         <div class="info">
+            <div class="info-left">
+                  <div class="flex-table">
+                     {% if album_name %}
+                     <div>Album</div>
+                     <div>{{ album_name }}</div>
+                     {% endif %}
+                     <div>Year</div>
+                     <div>{{ year }}</div>
+                     <div>Composers</div>
+                     <div>{{ composers }}</div>
+                     <div>Lyricists</div>
+                     <div>{{ lyricists }}</div>
+               </div>
+            </div>
+            <div class="info-right">
+               <h5>{{ editors_note }}</h5>
+            </div>
+         </div>
+      </div>
+
+      <div class="mobile">
+         <h1>{{ chinese_song_title }}</h1>
+         <h2>{{ english_song_title }}</h2>
+         <h4>{{ english_author}} <br> <span class="chi_font">{{ chinese_author }}</span></h4>
+      </div>
+   </div>
+   <div class="mobile">
+      <div class="flex-table">
+         {% if album_name %}
+         <div>Album</div>
+         <div>{{ album_name }}</div>
+         {% endif %}
+         <div>Year</div>
+         <div>{{ year }}</div>
+         <div>Composers</div>
+         <div>{{ composers }}</div>
+         <div>Lyricists</div>
+         <div>{{ lyricists }}</div>
+      </div>
+      <h5>{{ editors_note }}</h5>
+      <div class="calligraphy">
+         {% if image_2 %}
+         <button class="image-toggle" onclick="toggleImage()"></button>
+         {% endif %}
+         <img src='{{ image_1 }}' id="image">
+      </div>
+      <div class="lyrics">{{ content }}</div>
+      <h6 class="return"><a href="./">return to gallery</a></h6>
+   </div>
+
+
+   <div class="desktop">
+      <div class="content">
+         <div class="lyrics">{{ content }}
+         <h6 class="return"><a href="./">return to gallery</a></h6>
+         </div>
+         <div class="calligraphy_right">
+            {% if image_2 %}
+            <button class="image-toggle" onclick="toggleImage()"></button>
+            {% endif %}
+            <img src='{{ image_1 }}' id="image_desktop">
+         </div>
+
+         
+   </div>
+   </div>
+</body>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+   var player;
+   function onYouTubeIframeAPIReady() {
+      var container = document.querySelector('.fullscreen_01');
+      var videoWrapper = document.querySelector('#video-wrapper');
+
+      var videoWidth = Math.min(container.clientHeight * 0.2667, 300);
+      var videoHeight = videoWidth * 9 / 16;
+
+      // Ensure video stays within frame
+      var maxX = container.clientWidth - videoWidth;
+      var maxY = container.clientHeight - videoHeight;
+
+      var randomX = Math.max(0, Math.min(maxX, Math.floor(Math.random() * maxX)));
+      var randomY = Math.max(0, Math.min(maxY, Math.floor(Math.random() * maxY)));
+
+      // Apply position to the wrapper
+      videoWrapper.style.left = randomX + 'px';
+      videoWrapper.style.top = randomY + 'px';
+      videoWrapper.style.width = videoWidth + 'px';
+      videoWrapper.style.height = videoHeight + 'px';
+
+      var videoFrame = videoWrapper.querySelector('#video-frame');
+      player = new YT.Player(videoFrame, {
+         width: '100%',
+         height: '100%',
+         videoId: '{{ youtube_id }}',
+         playerVars: {
+            autoplay: 1,
+            controls: 0,
+            disablekb: 1,
+            fs: 0,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0,
+            origin: 'https://www.youtube.com',
+            'mute': 1,
+         },
+         events: {
+            'onReady': onPlayerReady
+         }
+      });
+   }
+
+   function onPlayerReady(event) {
+      event.target.playVideo();
+      setTimeout(() => {
+         document.querySelector('#video-wrapper').style.opacity = '1';
+      }, 100);
+
+      document.getElementById('unmuteButton').addEventListener('click', function () {
+         if (player && player.unMute) {
+            player.unMute();
+            player.setVolume(100);
+         }
+         this.style.display = 'none';
+      });
+   }
+</script>
+<script>
+   let imageToggle = true;
+
+   function toggleImage() {
+      const imageMobile = document.getElementById('image');
+      const imageDesktop = document.getElementById('image_desktop');
+      imageToggle = !imageToggle;
+      imageMobile.src = imageToggle ? '{{ image_1 }}' : '{{ image_2 }}';
+      imageDesktop.src = imageToggle ? '{{ image_1 }}' : '{{ image_2 }}';
+   }
+</script>
+
+</html>

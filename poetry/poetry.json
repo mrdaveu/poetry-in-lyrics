@@ -1,0 +1,5 @@
+{
+   "layout": "layout.html",
+   "tags": "poetry",
+   "permalink": "/{{ english_song_title | slug }}.html"
+}

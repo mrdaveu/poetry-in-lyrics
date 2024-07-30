@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="./stylesheet.css">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="Poetry in Lyrics">
+   <title>Poetry in Lyrics</title>
+</head>
+
+<body class="menu">
+    <div class="header">
+        <div class="logo"><a href="/"><img src="./media/logo_wob.png" alt="Poetry in Lyrics"
+                 style="width: var(--logo-width)"></a></div>
+     </div>
+<main>
+{% for poetry in collections.poetry %}
+    <a href="{{ poetry.url }}" class="menu">
+        <h1 class="menu">{{ poetry.data.english_song_title }} <span class="chinese">{{ poetry.data.chinese_song_title }}</span></h1>
+        <h2 class="menu">{{ poetry.data.english_author }} <span class="chinese">{{ poetry.data.chinese_author }}</span></h2>
+    </a>
+{% endfor %}
+</main>
+</body>
+</html>
