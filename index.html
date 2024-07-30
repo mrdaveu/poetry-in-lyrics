@@ -14,12 +14,12 @@
                  style="width: var(--logo-width)"></a></div>
      </div>
 <main>
-{% for poetry in collections.poetry %}
+{%- for poetry in collections.poetry reversed -%}
     <a href="{{ poetry.url }}" class="menu">
         <h1 class="menu">{{ poetry.data.english_song_title }} <span class="chinese">{{ poetry.data.chinese_song_title }}</span></h1>
         <h2 class="menu">{{ poetry.data.english_author }} <span class="chinese">{{ poetry.data.chinese_author }}</span></h2>
     </a>
-{% endfor %}
+{%- endfor -%}
 </main>
 </body>
 </html>
