@@ -2,7 +2,7 @@
 chinese_song_title: "玫瑰少年"
 english_song_title: "Womxnly"
 chinese_author: "蔡依林"
-english_author: "Jolene Tsai"
+english_author: "Jolin Tsai"
 album_name: "Ugly Beauty"
 year: "2018"
 composers: "Razor Chiang 剃刀蔣 <br>
